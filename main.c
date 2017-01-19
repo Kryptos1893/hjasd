@@ -25,46 +25,54 @@ int dice_min_max(int min, int max)
 
 int main()
 {
-    enum spieler {plus, minus};
-    enum spieler gamer;
-    int verlauf[500];
-    int wurf;
+    enum player {plus, minus};
+    enum player gamer;
+    int history[500];
+    int throw;
     int d[7];
     int rand;
-    int feld = 10;
-    int zaehl=0;
-    while((feld != 1) && (feld != 20))
+    int board = 10;
+    int count=0;
+    short winner=0;
+    while((board != 1) && (board != 20))
     {
 
         gamer = minus;
         rand = dice_min_max(1,6);
-        if((feld - rand) < 1)
-            feld = feld + rand;
-        feld = feld - rand;
-        verlauf[zaehl] = feld;
-        zaehl++;
+        if((board - rand) < 1)
+            board = board + rand;
+        board = board - rand;
+        history[count] = board;
+        count++;
 
-        if(feld == 1){
+        if(board == 1){
+            winner = 1;
             break;
         }
 
         gamer = plus;
         rand = dice_min_max(1,6);
-        if((feld + rand) > 20)
-            feld = feld - rand;
-        feld = feld + rand;
-        verlauf[zaehl] = feld;
-        zaehl++;
-        if(feld == 20)
+        if((board + rand) > 20)
+            board = board - rand;
+        board = board + rand;
+        history[count] = board;
+        count++;
+        if(board == 20)
         {
+            winner=2;
             break;
         }
     }
 
+    if(winner==1)
+        printf("The winner is: Minus");
+    else if(winner==2)
+        printf("The winner is: Plus");
+    else
+        printf("Error");
 
 
 
     return 0;
 }
-
 
